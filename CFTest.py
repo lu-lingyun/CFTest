@@ -1,14 +1,15 @@
 MAX_CONCURRENT_THREADS = 1000
 REQUEST_TIMEOUT = 3
 
-import sys
-import requests
-import ipaddress
-from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
-import re
-import threading
 import argparse
 from collections import defaultdict
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+import ipaddress
+import re
+import sys
+import threading
+
+import requests
 
 def is_valid_ipv4_range(ip_range):
     """验证IPv4段格式是否正确"""

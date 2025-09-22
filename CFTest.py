@@ -12,22 +12,11 @@ from collections import defaultdict
 
 def is_valid_ipv4_range(ip_range):
     """验证IPv4段格式是否正确"""
-    cidr_pattern = r'^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})$'
-    match = re.match(cidr_pattern, ip_range)
-    
-    if not match:
+    try:
+        network = ipaddress.ip_network(ip_range, strict=True)
+        return isinstance(network, ipaddress.IPv4Network)
+    except ValueError:
         return False
-    
-    for i in range(4):
-        if not (0 <= int(match.group(i+1)) <= 255):
-            return False
-    
-    prefix = int(match.group(5))
-    if not (0 <= prefix <= 32):
-        return False
-        
-    return True
-
 def fetch_ip_ranges(url):
     """从指定URL获取IP段列表"""
     try:
